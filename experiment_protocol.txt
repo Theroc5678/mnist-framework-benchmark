@@ -1,0 +1,68 @@
+MNIST CROSS-FRAMEWORK EXPERIMENT
+
+Objective:
+Compare PyTorch and TensorFlow on MNIST under matched
+experimental conditions.
+
+Dataset:
+MNIST handwritten digits
+Training set: 60,000 images
+Test set: 10,000 images
+Input: 28x28 grayscale images, flattened to 784 features
+Normalization: pixel values divided by 255
+Data type: float32
+
+Baseline model:
+Architecture: 784 -> 128 -> 10
+Hidden activation: ReLU
+Output: 10 logits
+Loss: Cross-entropy
+Optimizer: SGD
+Learning rate: 0.01
+Batch size: 64
+Epochs: 5
+Random seed: 42
+Device: CPU
+Thread configuration: 1 intra-op, 1 inter-op for PyTorch
+
+Research questions:
+1. How long does each framework take to train the model?
+2. How long does each framework take to perform inference?
+3. What test accuracy does each framework achieve?
+4. How many images per second can each framework process?
+5. How do batch size and architecture affect performance?
+6. What CPU performance counters can be collected reliably?
+
+Primary measurements:
+- Training time in seconds
+- Inference time in seconds
+- Final test accuracy
+- Training throughput in images per second
+- Inference throughput in images per second
+
+Additional measurements:
+- Training loss per epoch
+- Training accuracy per epoch
+- CPU performance counters, where available
+
+Experimental controls:
+- Same dataset and data split
+- Same preprocessing and data type
+- Matched architecture and activation
+- Same optimizer and learning rate
+- Same batch size and epoch count within each comparison
+- Matched thread settings where supported
+- Record hardware and software versions
+
+Timing rules:
+- Exclude dataset downloading and preprocessing from training time.
+- Record training and inference times separately.
+- Record the inference batch size and warm-up procedure.
+- Keep setup time separate from measured execution time.
+
+Interpretation:
+- Batch-size sweeps change the number of optimizer steps.
+- Architecture variants keep other training settings matched.
+- The same seed does not guarantee identical initial weights
+  across frameworks.
+- Different hardware may confound performance comparisons.
